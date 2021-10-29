@@ -1,0 +1,25 @@
+{
+    "name": "ristekusdi/service-account-php",
+    "description": "Keycloak Service Account library using PHP",
+    "type": "library",
+    "autoload": {
+        "psr-4": {
+            "RistekUSDI\\ServiceAccount\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Riset dan Teknologi USDI",
+            "email": "usdi@unud.ac.id"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^7.1",
+        "vlucas/phpdotenv": "5.3"
+    }
+}
