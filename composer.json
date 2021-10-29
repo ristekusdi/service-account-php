@@ -5,10 +5,7 @@
     "autoload": {
         "psr-4": {
             "RistekUSDI\\ServiceAccount\\": "src/"
-        },
-        "files": [
-            "src/helpers.php"
-        ]
+        }
     },
     "license": "MIT",
     "authors": [
