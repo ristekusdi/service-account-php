@@ -54,4 +54,43 @@ class Base
 
         return $access_token;
     }
+
+    public function isTokenActive($token)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "{$_ENV['SSO_BASE_URL']}/realms/{$this->realm}/protocol/openid-connect/token/introspect",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => "token_type_hint=requesting_party_token&token={$token}",
+            CURLOPT_HTTPHEADER => array(
+                'Content-Type: application/x-www-form-urlencoded',
+            ),
+            CURLOPT_USERPWD => $this->username.":".$this->password
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        
+        curl_close($curl);
+
+        $result = false;
+
+        if ($httpcode === 200) {
+            $decode_response = json_decode($response, true);
+            if (isset($decode_response['active'])) {
+                if ($decode_response['active'] == true) {
+                    $result = true;
+                }
+            }
+        }
+
+        return $result;
+    }
 }
