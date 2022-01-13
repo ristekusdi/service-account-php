@@ -7,7 +7,7 @@
             "RistekUSDI\\ServiceAccount\\": "src/"
         },
         "files": [
-            "helpers.php"
+            "src/helpers.php"
         ]
     },
     "license": "MIT",
