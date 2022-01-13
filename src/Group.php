@@ -227,4 +227,75 @@ class Group
 
         return $result;
     }
+
+    public function members($group_id)
+    {
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/members",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$this->token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $result = [];
+
+        if ($httpcode === 200) {
+            $result = json_decode($response, true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Mendapatkan daftar anggota berdasarkan role mapping client
+     * @param $role_name, $client_id (id of client NOT client-id)
+     * @return array of members
+     */
+    public function getRoleMappingMembers($role_name, $client_id)
+    {
+        $groups = flatten_groups($this->get());
+
+        $filtered_groups = [];
+        foreach ($groups as $group) {
+            $assigned_roles = $this->getAssignedRoles($group['id'], $client_id);
+            foreach ($assigned_roles as $assigned_role) {
+                if ($assigned_role['name'] == $role_name) {
+                    $filtered_groups[] = $group;
+                }
+            }
+        }
+
+        $filtered_group_members = [];
+        foreach ($filtered_groups as $group) {
+            $sa_group_members = $this->members($group['id']);
+            $members = [];
+            foreach ($sa_group_members as $sa_group_member) {
+                $member = [];
+                $member['id'] = $sa_group_member['id'];
+                $member['username'] = $sa_group_member['username'];
+                $member['firstname'] = $sa_group_member['firstName'];
+                $member['lastname'] = $sa_group_member['lastName'];
+                $member['email'] = $sa_group_member['email'];
+                $member['group_name'] = $group['name'];
+
+                $members[] = $member;
+            }
+            $filtered_group_members[] = $members;
+        }
+
+        return array_merge(...$filtered_group_members);
+    }
 }
