@@ -338,4 +338,50 @@ class Client
             'code' => (int) $httpcode
         );
     }
+
+    /**
+     * Get list of user based on client id and role name
+     * @param $client_id $role_name
+     * @return array of user
+     */
+    public function getUserInRole($client_id, $role_name)
+    {
+        $curl = curl_init();
+        
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}/roles/{$role_name}/users",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$this->token
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $result = [];
+        $users = [];
+        if ($httpcode === 200) {
+            $result = json_decode($response, true);
+            foreach ($result as $value) {
+                $user = [];
+                $user['id'] = $value['id'];
+                $user['username'] = $value['username'];
+                $user['firstname'] = $value['firstName'];
+                $user['lastname'] = $value['lastName'];
+                $user['email'] = $value['email'];
+
+                $users[] = $user;
+            }
+        }
+
+        return $users;
+    }
 }
