@@ -1,11 +1,3 @@
 # KISARA PHP
 
-Keycloak Service Account (Kisara) library using PHP.
-
-## Requirement
-
-- PHP version >= 7.1
-
-## Documentation
-
-Soon...
+Keycloak Service Account (Kisara) library using PHP. Minimum versi PHP 7.2 dan dokumentasi segera!
