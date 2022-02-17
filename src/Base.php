@@ -25,7 +25,7 @@ class Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$_ENV['SSO_BASE_URL']}/realms/{$this->realm}/protocol/openid-connect/token",
+            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/realms/{$this->realm}/protocol/openid-connect/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -60,7 +60,7 @@ class Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$_ENV['SSO_BASE_URL']}/realms/{$this->realm}/protocol/openid-connect/token/introspect",
+            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/realms/{$this->realm}/protocol/openid-connect/token/introspect",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
