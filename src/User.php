@@ -4,18 +4,8 @@ namespace RistekUSDI\ServiceAccount;
 
 use RistekUSDI\ServiceAccount\Base;
 
-class User
+class User extends Base
 {
-    private $token;
-    private $realm;
-
-    public function __construct()
-    {
-        $base = new Base();
-        $this->token = $base->getToken();
-        $this->realm = $base->getRealm();
-    }
-
     public function get($params)
     {
         $curl = curl_init();
@@ -26,7 +16,7 @@ class User
         }
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users?".$query,
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users?{$query}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -35,7 +25,7 @@ class User
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -67,8 +57,8 @@ class User
 
         return response()->json(array(
             'status' => 'ok',
-            'impersonate_url' => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/impersonation",
-            'access_token' => $this->token
+            'impersonate_url' => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/impersonation",
+            'access_token' => $this->getToken()
         ), 200);
     }
 
@@ -77,7 +67,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -87,7 +77,7 @@ class User
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -110,7 +100,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/role-mappings/clients/{$client_id}/available",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}/available",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -119,7 +109,7 @@ class User
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -157,7 +147,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -166,7 +156,7 @@ class User
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -188,7 +178,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/role-mappings/clients/{$client_id}/composite",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}/composite",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -197,7 +187,7 @@ class User
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -219,7 +209,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -229,7 +219,7 @@ class User
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($roles),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -251,7 +241,7 @@ class User
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -261,7 +251,7 @@ class User
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_POSTFIELDS => json_encode($roles),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));

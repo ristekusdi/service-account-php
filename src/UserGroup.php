@@ -4,23 +4,14 @@ namespace RistekUSDI\ServiceAccount;
 
 use RistekUSDI\ServiceAccount\Base;
 
-class UserGroup
+class UserGroup extends Base
 {
-    private $token;
-    private $realm;
-
-    public function __construct()
-    {
-        $this->token = (new Base)->getToken();
-        $this->realm = (new Base)->getRealm();
-    }
-
     public function attach($user_id, $group_id)
     {
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/groups/{$group_id}",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/users/{$user_id}/groups/{$group_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -29,7 +20,7 @@ class UserGroup
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -51,7 +42,7 @@ class UserGroup
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/users/{$user_id}/groups/{$group_id}",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/users/{$user_id}/groups/{$group_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -60,7 +51,7 @@ class UserGroup
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 

@@ -4,18 +4,8 @@ namespace RistekUSDI\ServiceAccount;
 
 use RistekUSDI\ServiceAccount\Base;
 
-class Group
+class Group extends Base
 {
-    private $token;
-    private $realm;
-
-    public function __construct()
-    {
-        $base = new Base();
-        $this->token = $base->getToken();
-        $this->realm = $base->getRealm();
-    }
-
     /**
      * Get list of groups
      */
@@ -29,7 +19,7 @@ class Group
         }
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups?".$query,
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups?".$query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -38,7 +28,7 @@ class Group
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -60,7 +50,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/role-mappings/clients/{$client_id}/available",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}/available",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -69,7 +59,7 @@ class Group
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -107,7 +97,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -116,7 +106,7 @@ class Group
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -138,7 +128,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/role-mappings/clients/{$client_id}/composite",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}/composite",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -147,7 +137,7 @@ class Group
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -169,7 +159,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -179,7 +169,7 @@ class Group
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($roles),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -201,7 +191,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -211,7 +201,7 @@ class Group
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_POSTFIELDS => json_encode($roles),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -233,7 +223,7 @@ class Group
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/groups/{$group_id}/members",
+            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/members",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -242,7 +232,7 @@ class Group
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 

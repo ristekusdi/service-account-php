@@ -4,15 +4,27 @@ namespace RistekUSDI\ServiceAccount;
 
 class Base
 {
+    private $base_url;
+    private $realm;
     private $username;
     private $password;
-    private $realm;
 
-    public function __construct()
+    public function __construct($config = array())
     {
-        $this->username = isset($_ENV['SSO_CLIENT_ID']) ? $_ENV['SSO_CLIENT_ID'] : null;
-        $this->password = isset($_ENV['SSO_CLIENT_SECRET']) ? $_ENV['SSO_CLIENT_SECRET'] : null;
-        $this->realm = isset($_ENV['SSO_REALM']) ? $_ENV['SSO_REALM'] : null;
+        $this->base_url = $config['base_url'];
+        $this->realm = $config['realm'];
+        $this->username = $config['client_id'];
+        $this->password = $config['client_secret'];
+    }
+
+    public function getBaseUrl()
+    {
+        return $this->base_url;
+    }
+
+    public function getUrl()
+    {
+        return "$this->base_url/realms/{$this->getRealm()}";
     }
 
     public function getRealm()
@@ -20,12 +32,22 @@ class Base
         return $this->realm;
     }
 
+    public function getUsername()
+    {
+        return $this->username;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
     public function getToken()
     {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/realms/{$this->realm}/protocol/openid-connect/token",
+            CURLOPT_URL => "{$this->getUrl()}/protocol/openid-connect/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -37,7 +59,7 @@ class Base
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
             ),
-            CURLOPT_USERPWD => $this->username.":".$this->password
+            CURLOPT_USERPWD => "{$this->getUsername()}:{$this->getPassword()}"
         ));
 
         $response = curl_exec($curl);
@@ -60,7 +82,7 @@ class Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/realms/{$this->realm}/protocol/openid-connect/token/introspect",
+            CURLOPT_URL => "{$this->getUrl()}/protocol/openid-connect/token/introspect",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -72,7 +94,7 @@ class Base
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
             ),
-            CURLOPT_USERPWD => $this->username.":".$this->password
+            CURLOPT_USERPWD => "{$this->getUsername()}:{$this->getPassword()}"
         ));
 
         $response = curl_exec($curl);

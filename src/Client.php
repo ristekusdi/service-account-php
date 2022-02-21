@@ -4,17 +4,8 @@ namespace RistekUSDI\ServiceAccount;
 
 use RistekUSDI\ServiceAccount\Base;
 
-class Client
+class Client extends Base
 {
-    private $token;
-    private $realm;
-
-    public function __construct()
-    {
-        $base = new Base();
-        $this->token = $base->getToken();
-        $this->realm = $base->getRealm();
-    }
 
     public function getRaw($params)
     {
@@ -26,7 +17,7 @@ class Client
         }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients?".$query,
+            CURLOPT_URL =>"{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients?{$query}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -35,7 +26,7 @@ class Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -80,7 +71,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -89,7 +80,7 @@ class Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -111,7 +102,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -121,7 +112,7 @@ class Client
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -141,7 +132,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -151,7 +142,7 @@ class Client
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => json_encode($client, JSON_UNESCAPED_SLASHES),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -170,7 +161,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -179,7 +170,7 @@ class Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'DELETE',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -198,7 +189,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$id}/client-secret",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$id}/client-secret",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -207,7 +198,7 @@ class Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -235,7 +226,7 @@ class Client
         }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}/roles?".$query,
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles?".$query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -244,7 +235,7 @@ class Client
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
@@ -284,7 +275,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}/roles",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -294,7 +285,7 @@ class Client
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -314,7 +305,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}/roles/{$role_name}",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles/{$role_name}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -349,7 +340,7 @@ class Client
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $_ENV['SSO_BASE_URL']."/admin/realms/{$this->realm}/clients/{$client_id}/roles/{$role_name}/users",
+            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles/{$role_name}/users",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
