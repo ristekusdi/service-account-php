@@ -315,7 +315,7 @@ class Client extends Base
             CURLOPT_CUSTOMREQUEST => 'PUT',
             CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token,
+                'Authorization: Bearer '.$this->getToken(),
                 'Content-Type: application/json'
             ),
         ));
@@ -349,7 +349,7 @@ class Client extends Base
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'GET',
             CURLOPT_HTTPHEADER => array(
-                'Authorization: Bearer '.$this->token
+                'Authorization: Bearer '.$this->getToken()
             ),
         ));
 
