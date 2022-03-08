@@ -6,7 +6,7 @@ use RistekUSDI\ServiceAccount\Base;
 
 class User extends Base
 {
-    public function get($params)
+    public function get($params = array())
     {
         $curl = curl_init();
 
