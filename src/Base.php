@@ -11,7 +11,7 @@ class Base
 
     public function __construct($config = array())
     {
-        $this->base_url = $config['base_url'];
+        $this->base_url = $config['admin_url'];
         $this->realm = $config['realm'];
         $this->username = $config['client_id'];
         $this->password = $config['client_secret'];
