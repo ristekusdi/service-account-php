@@ -17,7 +17,7 @@ class Client extends Base
         }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL =>"{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients?{$query}",
+            CURLOPT_URL =>"{$this->getAdminRealmUrl()}/clients?{$query}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -71,7 +71,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -102,7 +102,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -132,7 +132,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -161,7 +161,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -189,7 +189,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$id}/client-secret",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$id}/client-secret",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -226,7 +226,7 @@ class Client extends Base
         }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles?".$query,
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles?".$query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -275,7 +275,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -305,7 +305,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles/{$role_name}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles/{$role_name}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -340,7 +340,7 @@ class Client extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/clients/{$client_id}/roles/{$role_name}/users",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles/{$role_name}/users",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

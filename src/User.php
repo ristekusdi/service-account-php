@@ -16,7 +16,7 @@ class User extends Base
         }
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users?{$query}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users?{$query}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -57,7 +57,7 @@ class User extends Base
 
         return response()->json(array(
             'status' => 'ok',
-            'impersonate_url' => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/impersonation",
+            'impersonate_url' => "{$this->getAdminRealmUrl()}/users/{$user_id}/impersonation",
             'access_token' => $this->getToken()
         ), 200);
     }
@@ -67,7 +67,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -100,7 +100,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}/available",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}/role-mappings/clients/{$client_id}/available",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -147,7 +147,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -178,7 +178,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}/composite",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}/role-mappings/clients/{$client_id}/composite",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -209,7 +209,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -241,7 +241,7 @@ class User extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseUrl()}/admin/realms/{$this->getRealm()}/users/{$user_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/users/{$user_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

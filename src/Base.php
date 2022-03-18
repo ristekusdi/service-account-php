@@ -4,6 +4,7 @@ namespace RistekUSDI\ServiceAccount;
 
 class Base
 {
+    private $admin_url;
     private $base_url;
     private $realm;
     private $username;
@@ -11,18 +12,19 @@ class Base
 
     public function __construct($config = array())
     {
-        $this->base_url = $config['admin_url'];
+        $this->admin_url = $config['admin_url'];
+        $this->base_url = $config['base_url'];
         $this->realm = $config['realm'];
         $this->username = $config['client_id'];
         $this->password = $config['client_secret'];
     }
 
-    public function getBaseUrl()
+    public function getAdminRealmUrl()
     {
-        return $this->base_url;
+        return "$this->admin_url/admin/realms/{$this->getRealm()}";
     }
 
-    public function getUrl()
+    public function getBaseRealmUrl()
     {
         return "$this->base_url/realms/{$this->getRealm()}";
     }
@@ -47,7 +49,7 @@ class Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getUrl()}/protocol/openid-connect/token",
+            CURLOPT_URL => "{$this->getBaseRealmUrl()}/protocol/openid-connect/token",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -82,7 +84,7 @@ class Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getUrl()}/protocol/openid-connect/token/introspect",
+            CURLOPT_URL => "{$this->getBaseRealmUrl()}/protocol/openid-connect/token/introspect",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

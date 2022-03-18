@@ -11,7 +11,7 @@ class Key extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/keys",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/keys",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

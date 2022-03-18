@@ -19,7 +19,38 @@ class Group extends Base
         }
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups?".$query,
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups?".$query,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Bearer '.$this->getToken()
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        $result = [];
+
+        if ($httpcode === 200) {
+            $result = json_decode($response, true);
+        }
+
+        return $result;
+    }
+
+    public function findById($id)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/groups/{$id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -50,7 +81,7 @@ class Group extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}/available",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/role-mappings/clients/{$client_id}/available",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -97,7 +128,7 @@ class Group extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -128,7 +159,7 @@ class Group extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}/composite",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/role-mappings/clients/{$client_id}/composite",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -159,7 +190,7 @@ class Group extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -191,7 +222,7 @@ class Group extends Base
         $curl = curl_init();
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/role-mappings/clients/{$client_id}",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/role-mappings/clients/{$client_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -218,12 +249,17 @@ class Group extends Base
         return $result;
     }
 
-    public function members($group_id)
+    public function members($group_id, $params = array())
     {
         $curl = curl_init();
+
+        $query = '';
+        if (isset($params)) {
+            $query = http_build_query($params);
+        }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/groups/{$group_id}/members",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/groups/{$group_id}/members?".$query,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,

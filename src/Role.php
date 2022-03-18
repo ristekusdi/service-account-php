@@ -11,7 +11,7 @@ class Role extends Base
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => $this->getBaseUrl()."/admin/realms/{$this->getRealm()}/roles-by-id/{$role_id}",
+            CURLOPT_URL => $this->getAdminRealmUrl()."/roles-by-id/{$role_id}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
