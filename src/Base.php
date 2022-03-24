@@ -7,16 +7,20 @@ class Base
     private $admin_url;
     private $base_url;
     private $realm;
+    private $client_id;
+    private $client_secret;
     private $username;
     private $password;
+    private $token;
 
     public function __construct($config = array())
     {
         $this->admin_url = $config['admin_url'];
         $this->base_url = $config['base_url'];
         $this->realm = $config['realm'];
-        $this->username = $config['client_id'];
-        $this->password = $config['client_secret'];
+        $this->client_id = $config['client_id'];
+        $this->client_secret = $config['client_secret'];
+        $this->token = isset($config['token']) ? $config['token'] : null;
     }
 
     public function getAdminRealmUrl()
@@ -34,6 +38,16 @@ class Base
         return $this->realm;
     }
 
+    public function getClientId()
+    {
+        return $this->client_id;
+    }
+
+    public function getClientSecret()
+    {
+        return $this->client_secret;
+    }
+
     public function getUsername()
     {
         return $this->username;
@@ -46,37 +60,41 @@ class Base
 
     public function getToken()
     {
-        $curl = curl_init();
+        if (!empty($this->token)) {
+            return $this->token;
+        } else {
+            $curl = curl_init();
 
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getBaseRealmUrl()}/protocol/openid-connect/token",
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/x-www-form-urlencoded',
-            ),
-            CURLOPT_USERPWD => "{$this->getUsername()}:{$this->getPassword()}"
-        ));
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => "{$this->getBaseRealmUrl()}/protocol/openid-connect/token",
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'POST',
+                CURLOPT_POSTFIELDS => 'grant_type=client_credentials',
+                CURLOPT_HTTPHEADER => array(
+                    'Content-Type: application/x-www-form-urlencoded',
+                ),
+                CURLOPT_USERPWD => "{$this->getClientId()}:{$this->getClientSecret()}"
+            ));
 
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        
-        curl_close($curl);
+            $response = curl_exec($curl);
+            $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            
+            curl_close($curl);
 
-        $access_token = '';
+            $access_token = '';
 
-        if ($httpcode === 200) {
-            $decode_response = json_decode($response, true);
-            $access_token = $decode_response['access_token'];
+            if ($httpcode === 200) {
+                $decode_response = json_decode($response, true);
+                $access_token = $decode_response['access_token'];
+            }
+
+            return $access_token;
         }
-
-        return $access_token;
     }
 
     public function isTokenActive($token)
@@ -96,7 +114,7 @@ class Base
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/x-www-form-urlencoded',
             ),
-            CURLOPT_USERPWD => "{$this->getUsername()}:{$this->getPassword()}"
+            CURLOPT_USERPWD => "{$this->getClientId()}:{$this->getClientSecret()}"
         ));
 
         $response = curl_exec($curl);
