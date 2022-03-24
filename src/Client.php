@@ -53,7 +53,6 @@ class Client extends Base
             'account-console',
             'admin-cli',
             'broker',
-            'realm-management',
             'security-admin-console'
         ];
         
