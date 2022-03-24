@@ -28,13 +28,7 @@ class UserGroup extends Base
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        $result = [];
-
-        if ($httpcode === 204) {
-            $result = json_decode($response, true);
-        }
-        
-        return $result;
+        return array($response, $httpcode);
     }
 
     public function detach($user_id, $group_id)
@@ -59,12 +53,6 @@ class UserGroup extends Base
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        $result = [];
-        
-        if ($httpcode === 204) {
-            $result = json_decode($response, true);
-        }
-        
-        return $result;
+        return array($response, $httpcode);
     }
 }
