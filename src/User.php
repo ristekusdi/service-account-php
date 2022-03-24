@@ -113,13 +113,7 @@ class User extends Base
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        $users = [];
-
-        if ($httpcode === 200) {
-            $users = json_decode($response, true);
-        }
-
-        return $users;
+        return array($response, $httpcode);
     }
 
     public function getRawAvailableRoles($user_id, $client_id)
