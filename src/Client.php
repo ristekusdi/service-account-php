@@ -7,7 +7,7 @@ use RistekUSDI\ServiceAccount\Base;
 class Client extends Base
 {
 
-    public function getRaw($params)
+    public function getRaw($params = array())
     {
         $curl = curl_init();
 
