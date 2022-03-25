@@ -183,7 +183,8 @@ class Client extends Base
         );
     }
 
-    public function getClientSecret($id)
+    // Get client secret
+    public function getSecret($id)
     {
         $curl = curl_init();
         
