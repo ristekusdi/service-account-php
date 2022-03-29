@@ -66,7 +66,7 @@ class Client extends Base
         return $clients;
     }
 
-    public function getById($client_id)
+    public function findById($client_id)
     {
         $curl = curl_init();
         
