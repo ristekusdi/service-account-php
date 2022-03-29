@@ -332,16 +332,21 @@ class Client extends Base
     }
 
     /**
-     * Get list of user based on client id and role name
+     * Get users based on client id and role name
      * @param $client_id $role_name
-     * @return array of user
+     * @return array of users
      */
-    public function getUserInRole($client_id, $role_name)
+    public function getUsersInRole($client_id, $role_name, $params = array())
     {
         $curl = curl_init();
+
+        $query = '';
+        if (isset($params)) {
+            $query = http_build_query($params);
+        }
         
         curl_setopt_array($curl, array(
-            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles/{$role_name}/users",
+            CURLOPT_URL => "{$this->getAdminRealmUrl()}/clients/{$client_id}/roles/{$role_name}/users?{$query}",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -359,21 +364,10 @@ class Client extends Base
         curl_close($curl);
 
         $result = [];
-        $users = [];
         if ($httpcode === 200) {
             $result = json_decode($response, true);
-            foreach ($result as $value) {
-                $user = [];
-                $user['id'] = $value['id'];
-                $user['username'] = $value['username'];
-                $user['firstname'] = $value['firstName'];
-                $user['lastname'] = $value['lastName'];
-                $user['email'] = $value['email'];
-
-                $users[] = $user;
-            }
         }
 
-        return $users;
+        return $result;
     }
 }
