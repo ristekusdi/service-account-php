@@ -286,11 +286,11 @@ class Group extends Base
     }
 
     /**
-     * Mendapatkan daftar anggota berdasarkan role mapping client
+     * Mendapatkan daftar kelompok berdasarkan role mapping client
      * @param $role_name, $client_id (id of client NOT client-id)
-     * @return array of members
+     * @return array of groups
      */
-    public function getRoleMappingMembers($role_name, $client_id)
+    public function getRoleMapping($role_name, $client_id)
     {
         $groups = flatten_groups($this->get());
 
@@ -303,25 +303,7 @@ class Group extends Base
                 }
             }
         }
-
-        $filtered_group_members = [];
-        foreach ($filtered_groups as $group) {
-            $sa_group_members = $this->members($group['id']);
-            $members = [];
-            foreach ($sa_group_members as $sa_group_member) {
-                $member = [];
-                $member['id'] = $sa_group_member['id'];
-                $member['username'] = $sa_group_member['username'];
-                $member['firstname'] = $sa_group_member['firstName'];
-                $member['lastname'] = $sa_group_member['lastName'];
-                $member['email'] = $sa_group_member['email'];
-                $member['group_name'] = $group['name'];
-
-                $members[] = $member;
-            }
-            $filtered_group_members[] = $members;
-        }
-
-        return array_merge(...$filtered_group_members);
+        
+        return $filtered_groups;
     }
 }
