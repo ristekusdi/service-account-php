@@ -254,7 +254,7 @@ class User extends Base
             $result = json_decode($response, true);
         }
 
-        return $result;
+        return array($result, $httpcode);
     }
 
     public function deleteAssignedClientRoles($user_id, $client_id, $roles)
