@@ -214,7 +214,7 @@ class Group extends Base
             $result = json_decode($response, true);
         }
 
-        return $result;
+        return array($result, $httpcode);
     }
 
     public function deleteAssignedClientRoles($group_id, $client_id, $roles)
@@ -246,7 +246,7 @@ class Group extends Base
             $result = json_decode($response, true);
         }
 
-        return $result;
+        return array($result, $httpcode);
     }
 
     public function members($group_id, $params = array())
