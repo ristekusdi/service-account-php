@@ -28,7 +28,10 @@ class UserGroup extends Base
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        return array($response, $httpcode);
+        return array(
+            'data' => json_decode($response, true),
+            'code' => (int) $httpcode
+        );
     }
 
     public function detach($user_id, $group_id)
@@ -53,6 +56,9 @@ class UserGroup extends Base
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        return array($response, $httpcode);
+        return array(
+            'data' => json_decode($response, true),
+            'code' => (int) $httpcode
+        );
     }
 }
